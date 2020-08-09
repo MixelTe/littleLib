@@ -16,8 +16,8 @@ export const intersection = {
     circles: circlesIntersect,
 };
 export const random = {
-    Int: randomInt,
-    IntFrom: randomIntFrom,
+    int: randomInt,
+    intFrom: randomIntFrom,
     boolean: random_boolean,
     asbOrNot: random_asbOrNot,
 };
@@ -85,7 +85,7 @@ function drawGridOnCanvas(ctx, cellSize, color = "black") {
     ctx.stroke();
     ctx.restore();
 }
-function drawMouseCoordsOnCanvas(x, y, ctx) {
+function drawMouseCoordsOnCanvas(ctx, x, y) {
     const space = 2;
     const width = ctx.canvas.width;
     const height = ctx.canvas.height;
@@ -158,4 +158,78 @@ export function loadScript(scriptPath) {
 export function addButtonListener(id, f) {
     const button = getButton(id);
     button.addEventListener("click", f);
+}
+export class MoveAnimator {
+    constructor(x, y, shiftX, shiftY, maxX, maxY, stepX, stepY) {
+        this.x = x;
+        this.y = y;
+        this.shiftX = shiftX;
+        this.shiftY = shiftY;
+        this.maxX = maxX;
+        this.maxY = maxY;
+        this.stepX = stepX;
+        this.stepY = stepY;
+    }
+    X() {
+        if (this.x > this.maxX)
+            return this.maxX - (this.x - this.maxX) + this.shiftX;
+        return this.x + this.shiftX;
+    }
+    Y() {
+        if (this.y > this.maxY)
+            return this.maxY - (this.y - this.maxY) + this.shiftY;
+        return this.y + this.shiftY;
+    }
+    nextX(step) {
+        if (step == undefined) {
+            if (typeof this.stepX == "number")
+                this.x += this.stepX;
+            else
+                this.x += this.stepX();
+        }
+        else
+            this.x += step;
+        this.x %= this.maxX;
+        return this.x + this.shiftX;
+    }
+    nextY(step) {
+        if (step == undefined) {
+            if (typeof this.stepY == "number")
+                this.y += this.stepY;
+            else
+                this.y += this.stepY();
+        }
+        else
+            this.y += step;
+        this.y %= this.maxY;
+        return this.y + this.shiftY;
+    }
+    nextBounceX(step) {
+        if (step == undefined) {
+            if (typeof this.stepX == "number")
+                this.x += this.stepX;
+            else
+                this.x += this.stepX();
+        }
+        else
+            this.x += step;
+        this.x %= this.maxX * 2;
+        if (this.x > this.maxX)
+            return this.maxX - (this.x - this.maxX) + this.shiftX;
+        return this.x + this.shiftX;
+    }
+    nextBounceY(step) {
+        if (step == undefined) {
+            if (typeof this.stepY == "number")
+                this.y += this.stepY;
+            else
+                this.y += this.stepY();
+        }
+        else
+            this.y += step;
+        this.y %= this.maxY + 2;
+        if (this.y > this.maxY)
+            return this.maxY - (this.y - this.maxY) + this.shiftY;
+        return this.y + this.shiftY;
+    }
 }
