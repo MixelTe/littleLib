@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>littelLib</title>
+	<script src="out/main.js" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+	<div class="block">
+		<h1 class="block-head">Canvas</h1>
+		<div class="block-body">
+
+			<div class="box" style="width: 100%;">
+				<h2 class="box-head"></h2>
+				<div class="box-body">
+					<div class="canvasConteiner">
+						<canvas id="canvas_canvas"></canvas>
+					</div>
+				</div>
+				<div class="box-bottom">
+					<button id="button_canvas_drawGrid" style="margin-right: 4px;">Draw grid</button>
+					<button id="button_canvas_fitToParent">fit to parent</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<div class="block">
+		<h1 class="block-head">Intersections</h1>
+		<div class="block-body">
+
+			<div class="box">
+				<h2 class="box-head">rect-point</h2>
+				<div class="box-body">
+					<div class="canvasConteiner">
+						<canvas id="canvas_intersect_rectPoint"></canvas>
+					</div>
+				</div>
+				<div class="box-bottom">
+					<button id="button_intersect_rectPoint">Set point</button>
+				</div>
+			</div>
+
+			<div class="box">
+				<h2 class="box-head">rect-rect</h2>
+				<div class="box-body">
+					<div class="canvasConteiner">
+						<canvas id="canvas_intersect_rects"></canvas>
+					</div>
+				</div>
+				<div class="box-bottom">
+					<button id="button_intersect_rects">Draw Rect</button>
+				</div>
+			</div>
+
+			<div class="box">
+				<h2 class="box-head">circle-point</h2>
+				<div class="box-body">
+					<div class="canvasConteiner">
+						<canvas id="canvas_intersect_circlePoint"></canvas>
+					</div>
+				</div>
+				<div class="box-bottom">
+					<button id="button_intersect_circlePoint">Set point</button>
+				</div>
+			</div>
+
+			<div class="box">
+				<h2 class="box-head">circle-circle</h2>
+				<div class="box-body">
+					<div class="canvasConteiner">
+						<canvas id="canvas_intersect_circles"></canvas>
+					</div>
+				</div>
+				<div class="box-bottom">
+					<button id="button_intersect_circles">Draw circle</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+</body>
+</html>
