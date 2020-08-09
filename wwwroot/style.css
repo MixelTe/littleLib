@@ -53,3 +53,10 @@ h1 {
 .canvasConteiner canvas {
 	background-color: rgb(202, 255, 255);
 }
+
+
+.randomTable tbody tr td:nth-child(2),
+.randomTable tbody tr td:nth-child(4) {
+	color: blue;
+	width: 2em;
+}

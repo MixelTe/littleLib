@@ -108,3 +108,23 @@ export class Text_isIntersect extends DrawObj
 		ctx.fillText(`${this.intersect}`, this.x + ctx.measureText("intersect: ").width, this.y);
 	}
 }
+
+export class Text_simple extends DrawObj
+{
+	public x: number;
+	public y: number;
+	public text: string;
+	constructor(x: number, y: number, text: string)
+	{
+		super();
+		this.x = x;
+		this.y = y;
+		this.text = text;
+	}
+	draw(ctx: CanvasRenderingContext2D)
+	{
+		ctx.font = "16px Arial";
+		ctx.fillStyle = "black";
+		ctx.fillText(this.text, this.x, this.y);
+	}
+}
