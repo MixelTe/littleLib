@@ -107,7 +107,7 @@ function addListenerToDraw(buttonId: string, keyGroup: KeyGroup, key: Key, shape
 				endDrawing(keyGroup, key);
 			}
 			drawOne(keyGroup, key);
-			if (allDrawToggled[keyGroup][key]) Lib.canvas.drawCoords(e.offsetX, e.offsetY, ctx);
+			if (allDrawToggled[keyGroup][key]) Lib.canvas.drawCoords(ctx, e.offsetX, e.offsetY);
 		}
 	});
 	canvas.addEventListener("mousemove", (e: MouseEvent) =>
@@ -130,7 +130,7 @@ function addListenerToDraw(buttonId: string, keyGroup: KeyGroup, key: Key, shape
 			}
 			isIntersect(keyGroup, key);
 			drawOne(keyGroup, key);
-			Lib.canvas.drawCoords(e.offsetX, e.offsetY, ctx);
+			Lib.canvas.drawCoords(ctx, e.offsetX, e.offsetY);
 		}
 	});
 	canvas.addEventListener("mouseleave", (e: MouseEvent) =>

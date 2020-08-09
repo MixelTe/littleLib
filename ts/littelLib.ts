@@ -16,8 +16,8 @@ export const intersection = {
 	circles: circlesIntersect,
 }
 export const random = {
-	Int: randomInt,
-	IntFrom: randomIntFrom,
+	int: randomInt,
+	intFrom: randomIntFrom,
 	boolean: random_boolean,
 	asbOrNot: random_asbOrNot,
 }
@@ -93,7 +93,7 @@ function drawGridOnCanvas(ctx: CanvasRenderingContext2D, cellSize: number, color
 	ctx.stroke();
     ctx.restore();
 }
-function drawMouseCoordsOnCanvas(x: number, y: number, ctx: CanvasRenderingContext2D)
+function drawMouseCoordsOnCanvas(ctx: CanvasRenderingContext2D, x: number, y: number)
 {
 	const space = 2;
 	const width = ctx.canvas.width;
