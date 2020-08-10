@@ -75,3 +75,31 @@ Lib.square                | num: number                            | num * num
 Lib.loadScript            | scriptPath: string                     |
 Lib.addButtonListener     | id: string, f: (e: MouseEvent) => void |
 
+
+### Move animator
+``` ts
+const moveAnimator =  new Lib.MoveAnimator(x, y, shiftX, shiftY, maxX, maxY, stepX, stepY);
+```
+#### Constructor:
+argument    | type
+------------|-------
+x           | number
+y           | number
+shiftX      | number
+shiftY      | number
+maxX        | number
+maxY        | number
+stepX       | number \| (() => number)
+stepY       | number \| (() => number)
+
+#### Methods:
+method          | arguments      | return
+----------------|----------------|-----------
+X               |                | x + shiftX
+Y               |                | y + shiftY
+nextX           | step?: number  | x + shiftX
+nextY           | step?: number  | y + shiftY
+nextBounceX     | step?: number  | x + shiftX
+nextBounceY     | step?: number  | y + shiftY
+
+![](./docs/images/moveAnimator.png)
