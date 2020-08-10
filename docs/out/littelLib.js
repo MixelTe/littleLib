@@ -5,7 +5,10 @@ export const get = {
 };
 export const canvas = {
     getContext2d: getCanvasContext,
-    fitToParent: CanvasFitToParent,
+    fitToParent: {
+        BCR: CanvasFitToParentBCR,
+        ClientWH: CanvasFitToParentClientWH,
+    },
     drawGrid: drawGridOnCanvas,
     drawCoords: drawMouseCoordsOnCanvas,
 };
@@ -53,13 +56,22 @@ function getCanvasContext(canvas) {
         throw new Error(`Context is null`);
     return ctx;
 }
-function CanvasFitToParent(canvas) {
+function CanvasFitToParentBCR(canvas) {
     const parent = canvas.parentElement;
     if (parent == null)
         throw new Error("Canvas parent not found");
-    // const bcr = parent.getBoundingClientRect();
-    // const w = bcr.width;
-    // const h = bcr.height;
+    const bcr = parent.getBoundingClientRect();
+    const w = bcr.width;
+    const h = bcr.height;
+    canvas.width = w;
+    canvas.style.width = `${w}px`;
+    canvas.height = h;
+    canvas.style.height = `${h}px`;
+}
+function CanvasFitToParentClientWH(canvas) {
+    const parent = canvas.parentElement;
+    if (parent == null)
+        throw new Error("Canvas parent not found");
     const w = parent.clientWidth;
     const h = parent.clientHeight;
     canvas.width = w;
@@ -120,7 +132,6 @@ function rectPointIntersect(rect, point) {
 function circlesIntersect(circle1, circle2) {
     const dx = circle1.x - circle2.x;
     const dy = circle1.y - circle2.y;
-    console.log(square(dx) + square(dy), square(circle1.r + circle2.r));
     return square(dx) + square(dy) < square(circle1.r + circle2.r);
 }
 function rectIntersect(rect1, rect2) {
@@ -227,7 +238,7 @@ export class MoveAnimator {
         }
         else
             this.y += step;
-        this.y %= this.maxY + 2;
+        this.y %= this.maxY * 2;
         if (this.y > this.maxY)
             return this.maxY - (this.y - this.maxY) + this.shiftY;
         return this.y + this.shiftY;

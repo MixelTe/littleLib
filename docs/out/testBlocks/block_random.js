@@ -68,7 +68,7 @@ function redrawAll() {
 }
 function resizeCanvas() {
     resetCanvas(canvasAbsOrNot);
-    Lib.canvas.fitToParent(canvasAbsOrNot);
+    Lib.canvas.fitToParent.ClientWH(canvasAbsOrNot);
     const x = Math.round((canvasAbsOrNot.width - 50) / 2);
     const y = Math.round((canvasAbsOrNot.height - 50) / 2);
     AbsOrNot.obj = new Rect(x, y, 50, 50, "transparent");

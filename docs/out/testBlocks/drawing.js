@@ -18,7 +18,7 @@ export class Point extends DrawObj {
     }
 }
 export class Rect extends DrawObj {
-    constructor(x, y, width, height, color) {
+    constructor(x, y, width, height, color = "transparent") {
         super();
         this.x = x;
         this.y = y;
