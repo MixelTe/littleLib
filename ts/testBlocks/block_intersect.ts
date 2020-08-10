@@ -200,10 +200,10 @@ function resizeAllCanvas()
 	resetCanvas(allCanvas.circlePoint);
 	resetCanvas(allCanvas.circles);
 
-	Lib.canvas.fitToParent(allCanvas.rectPoint);
-	Lib.canvas.fitToParent(allCanvas.rects);
-	Lib.canvas.fitToParent(allCanvas.circlePoint);
-	Lib.canvas.fitToParent(allCanvas.circles);
+	Lib.canvas.fitToParent.ClientWH(allCanvas.rectPoint);
+	Lib.canvas.fitToParent.ClientWH(allCanvas.rects);
+	Lib.canvas.fitToParent.ClientWH(allCanvas.circlePoint);
+	Lib.canvas.fitToParent.ClientWH(allCanvas.circles);
 	redrawAll();
 }
 function resetCanvas(canvas: HTMLCanvasElement)

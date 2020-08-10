@@ -21,12 +21,13 @@ Lib.get.canvas            | id: string | HTMLCanvasElement
 
 
 ### Canvas functions
-function                     | arguments                                                       | return
------------------------------|-----------------------------------------------------------------|-----------------
-Lib.canvas.getContext2d      | canvas: HTMLCanvasElement                                       | CanvasRenderingContext2D
-Lib.canvas.fitToParent       | canvas: HTMLCanvasElement                                       | 
-Lib.canvas.drawGrid          | ctx: CanvasRenderingContext2D, cellSize: number, color?: string | 
-Lib.canvas.drawCoords        | ctx: CanvasRenderingContext2D, x: number, y: number             | 
+function                          | arguments                                                       | return
+----------------------------------|-----------------------------------------------------------------|-----------------
+Lib.canvas.getContext2d           | canvas: HTMLCanvasElement                                       | CanvasRenderingContext2D
+Lib.canvas.fitToParent.BCR        | canvas: HTMLCanvasElement                                       |
+Lib.canvas.fitToParent.ClientWH   | canvas: HTMLCanvasElement                                       |
+Lib.canvas.drawGrid               | ctx: CanvasRenderingContext2D, cellSize: number, color?: string |
+Lib.canvas.drawCoords             | ctx: CanvasRenderingContext2D, x: number, y: number             |
 
 
 ### Intersection test functions
