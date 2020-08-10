@@ -1,6 +1,13 @@
 # littelLib
 lib with simply functions
 
+## Lib file
+typescript:
+littelLib/ts/littelLib.ts
+
+javascript:
+littelLib/docs/out/littelLib.js
+
 ## Usage
 ``` ts
 import * as Lib from "./littelLib.js"
