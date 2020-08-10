@@ -34,7 +34,7 @@ export class Rect extends DrawObj
 	public width: number;
 	public height: number;
 	private color: string;
-	constructor(x: number, y: number, width: number, height: number, color: string)
+	constructor(x: number, y: number, width: number, height: number, color = "transparent")
 	{
 		super();
 		this.x = x;

@@ -211,6 +211,92 @@ export function addButtonListener(id: string, f: (e: MouseEvent) => void)
 	button.addEventListener("click", f);
 }
 
+export class MoveAnimator
+{
+	private x: number;
+	private y: number;
+	private shiftX: number;
+	private shiftY: number;
+	private maxX: number;
+	private maxY: number;
+	private stepX: number | (() => number);
+	private stepY: number | (() => number);
+
+	constructor(x: number, y: number, shiftX: number, shiftY: number, maxX: number, maxY: number, stepX: number | (() => number), stepY: number | (() => number))
+	{
+		this.x = x;
+		this.y = y;
+		this.shiftX = shiftX;
+		this.shiftY = shiftY;
+		this.maxX = maxX;
+		this.maxY = maxY;
+		this.stepX = stepX;
+		this.stepY = stepY;
+	}
+	X()
+	{
+		if (this.x > this.maxX) return this.maxX - (this.x - this.maxX) + this.shiftX;
+		return this.x + this.shiftX;
+	}
+	Y()
+	{
+		if (this.y > this.maxY) return this.maxY - (this.y - this.maxY) + this.shiftY;
+		return this.y + this.shiftY;
+	}
+
+	nextX(step?: number)
+	{
+		if (step == undefined)
+		{
+			if (typeof this.stepX == "number") this.x += this.stepX;
+			else this.x += this.stepX();
+		}
+		else this.x += step;
+
+		this.x %= this.maxX;
+		return this.x + this.shiftX;
+	}
+	nextY(step?: number)
+	{
+		if (step == undefined)
+		{
+			if (typeof this.stepY == "number") this.y += this.stepY;
+			else this.y += this.stepY();
+		}
+		else this.y += step;
+
+		this.y %= this.maxY;
+		return this.y + this.shiftY;
+	}
+
+	nextBounceX(step?: number)
+	{
+		if (step == undefined)
+		{
+			if (typeof this.stepX == "number") this.x += this.stepX;
+			else this.x += this.stepX();
+		}
+		else this.x += step;
+
+		this.x %= this.maxX * 2;
+		if (this.x > this.maxX) return this.maxX - (this.x - this.maxX) + this.shiftX;
+		return this.x + this.shiftX;
+	}
+	nextBounceY(step?: number)
+	{
+		if (step == undefined)
+		{
+			if (typeof this.stepY == "number") this.y += this.stepY;
+			else this.y += this.stepY();
+		}
+		else this.y += step;
+
+		this.y %= this.maxY * 2;
+		if (this.y > this.maxY) return this.maxY - (this.y - this.maxY) + this.shiftY;
+		return this.y + this.shiftY;
+	}
+}
+
 
 interface Rect {
 	x: number,
