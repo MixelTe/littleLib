@@ -1,4 +1,4 @@
-import * as Lib from "../littelLib.js";
+import * as Lib from "../littleLib.js";
 import { DrawObj, Rect, Circle, Text_isIntersect, Point } from "./drawing.js";
 
 const allCanvas = {

@@ -1,4 +1,4 @@
-import * as Lib from "../littelLib.js";
+import * as Lib from "../littleLib.js";
 import { Rect } from "./drawing.js";
 
 const speedX = 10;
@@ -33,7 +33,7 @@ function redrawAll()
 	next.rect.y = next.moveAnimator.nextY();
 	next.ctx.clearRect(0, 0, canvasNext.width, canvasNext.height);
 	next.rect.draw(next.ctx);
-	
+
 	bounce.rect.x = bounce.moveAnimator.nextBounceX();
 	bounce.rect.y = bounce.moveAnimator.nextBounceY();
 	bounce.ctx.clearRect(0, 0, canvasBounce.width, canvasBounce.height);
