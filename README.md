@@ -1,16 +1,16 @@
-# littelLib
+# littleLib
 lib with simply functions
 
 ## Lib file
 typescript:
-littelLib/ts/littelLib.ts
+littleLib/ts/littleLib.ts
 
 javascript:
-littelLib/docs/out/littelLib.js
+littleLib/docs/out/littleLib.js
 
 ## Usage
 ``` ts
-import * as Lib from "./littelLib.js"
+import * as Lib from "./littleLib.js"
 ```
 ### Get Html element
 function                  | arguments  | return
