@@ -18,6 +18,7 @@ function                  | arguments  | return
 Lib.get.div               | id: string | HTMLDivElement
 Lib.get.button            | id: string | HTMLButtonElement
 Lib.get.canvas            | id: string | HTMLCanvasElement
+Lib.get.input             | id: string | HTMLInputElement
 
 
 ### Canvas functions

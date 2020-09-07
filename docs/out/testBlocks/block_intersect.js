@@ -1,4 +1,4 @@
-import * as Lib from "../littelLib.js";
+import * as Lib from "../littleLib.js";
 import { Rect, Circle, Text_isIntersect, Point } from "./drawing.js";
 const allCanvas = {
     rectPoint: Lib.get.canvas("canvas_intersect_rectPoint"),

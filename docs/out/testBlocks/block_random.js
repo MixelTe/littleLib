@@ -1,4 +1,4 @@
-import * as Lib from "../littelLib.js";
+import * as Lib from "../littleLib.js";
 import { Rect, Text_simple } from "./drawing.js";
 const outputsInt = getOutputs("table_random_int");
 const outputsBoolean = getOutputs("table_random_boolean");

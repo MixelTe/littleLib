@@ -1,4 +1,4 @@
-import * as Lib from "../littelLib.js";
+import * as Lib from "../littleLib.js";
 export function run() {
     const canvas = Lib.get.canvas("canvas_canvas");
     const ctx = Lib.canvas.getContext2d(canvas);

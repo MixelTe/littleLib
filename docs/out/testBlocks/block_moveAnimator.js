@@ -1,4 +1,4 @@
-import * as Lib from "../littelLib.js";
+import * as Lib from "../littleLib.js";
 import { Rect } from "./drawing.js";
 const speedX = 10;
 const speedY = 10;
