@@ -2,6 +2,7 @@ export const get = {
 	div: getDiv,
 	button: getButton,
 	canvas: getCanvas,
+	input: getInput,
 }
 export const canvas = {
 	getContext2d: getCanvasContext,
@@ -48,6 +49,13 @@ function getCanvas(id: string)
 	if (el == null) throw new Error(`${id} not found`);
 	if (el instanceof HTMLCanvasElement) return el;
 	throw new Error(`${id} element not Canvas`);
+}
+function getInput(id: string)
+{
+	const el = <unknown | null>document.getElementById(id);
+	if (el == null) throw new Error(`${id} not found`);
+	if (el instanceof HTMLInputElement) return el;
+	throw new Error(`${id} element not Input`);
 }
 
 
