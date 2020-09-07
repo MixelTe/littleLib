@@ -143,6 +143,7 @@ function circlePointIntersect(circle: Circle, point: Point)
 }
 function rectPointIntersect(rect: Rect, point: Point)
 {
+	normalizeRect(rect);
 	return (
 		rect.x + rect.width > point.x &&
 		point.x > rect.x &&
@@ -159,12 +160,27 @@ function circlesIntersect(circle1: Circle, circle2: Circle)
 }
 function rectIntersect(rect1: Rect, rect2: Rect)
 {
+	normalizeRect(rect1);
+	normalizeRect(rect2);
     return (
         rect1.x + rect1.width > rect2.x &&
         rect2.x + rect2.width > rect1.x &&
         rect1.y + rect1.height > rect2.y &&
         rect2.y + rect2.height > rect1.y
     );
+}
+function normalizeRect(rect: Rect)
+{
+	if (rect.width < 0)
+	{
+		rect.x += rect.width;
+		rect.width = Math.abs(rect.width);
+	}
+	if (rect.height < 0)
+	{
+		rect.y += rect.height;
+		rect.height = Math.abs(rect.height);
+	}
 }
 
 
