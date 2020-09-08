@@ -134,10 +134,10 @@ function circlePointIntersect(circle, point) {
 }
 function rectPointIntersect(rect, point) {
     normalizeRect(rect);
-    return (rect.x + rect.width > point.x &&
-        point.x > rect.x &&
-        rect.y + rect.height > point.y &&
-        point.y > rect.y);
+    return (rect.x + rect.width >= point.x &&
+        point.x >= rect.x &&
+        rect.y + rect.height >= point.y &&
+        point.y >= rect.y);
 }
 function circlesIntersect(circle1, circle2) {
     const dx = circle1.x - circle2.x;
@@ -147,10 +147,10 @@ function circlesIntersect(circle1, circle2) {
 function rectIntersect(rect1, rect2) {
     normalizeRect(rect1);
     normalizeRect(rect2);
-    return (rect1.x + rect1.width > rect2.x &&
-        rect2.x + rect2.width > rect1.x &&
-        rect1.y + rect1.height > rect2.y &&
-        rect2.y + rect2.height > rect1.y);
+    return (rect1.x + rect1.width >= rect2.x &&
+        rect2.x + rect2.width >= rect1.x &&
+        rect1.y + rect1.height >= rect2.y &&
+        rect2.y + rect2.height >= rect1.y);
 }
 function normalizeRect(rect) {
     if (rect.width < 0) {
