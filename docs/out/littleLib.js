@@ -266,3 +266,100 @@ export class MoveAnimator {
         return this.y + this.shiftY;
     }
 }
+export class Rect {
+    constructor(x, y, width, height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+    static Create(point, width, height) {
+        return new Rect(point.x, point.y, width, height);
+    }
+    static Create2(point, point2) {
+        return new Rect(point.x, point.y, point2.x - point.x, point2.y - point.y);
+    }
+    intersectRect(rect) {
+        return rectIntersect(this, rect);
+    }
+    intersectPoint(point) {
+        return rectPointIntersect(this, point);
+    }
+    fill(ctx) {
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    stroke(ctx) {
+        ctx.strokeRect(this.x, this.y, this.width, this.height);
+    }
+    copy() {
+        return new Rect(this.x, this.y, this.width, this.height);
+    }
+    getPoint() {
+        return new Point(this.x, this.y);
+    }
+}
+let Point = /** @class */ (() => {
+    class Point {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        intersectRect(rect) {
+            return rectPointIntersect(rect, this);
+        }
+        intersectCircle(circte) {
+            return circlePointIntersect(circte, this);
+        }
+        fill(ctx) {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, Point.r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        stroke(ctx) {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, Point.r, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+        copy() {
+            return new Point(this.x, this.y);
+        }
+        getPoint() {
+            return this.copy();
+        }
+    }
+    Point.r = 2;
+    return Point;
+})();
+export { Point };
+export class Circle {
+    constructor(x, y, r) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+    }
+    static Create(point, r) {
+        return new Circle(point.x, point.y, r);
+    }
+    intersectCircle(circle) {
+        return circlesIntersect(this, circle);
+    }
+    intersectPoint(point) {
+        return circlePointIntersect(this, point);
+    }
+    fill(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    stroke(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+    copy() {
+        return new Circle(this.x, this.y, this.r);
+    }
+    getPoint() {
+        return new Point(this.x, this.y);
+    }
+}
