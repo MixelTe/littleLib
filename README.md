@@ -32,20 +32,20 @@ Lib.canvas.drawCoords             | ctx: CanvasRenderingContext2D, x: number, y:
 
 
 ### Intersection test functions
-function                        | arguments                        | return
---------------------------------|----------------------------------|---------------
-Lib.intersection.rectPoint      | rect: Rect, point: Point         | boolean
-Lib.intersection.rects          | rect1: Rect, rect2: Rect         | boolean
-Lib.intersection.circlePoint    | circle: Circle, point: Point     | boolean
-Lib.intersection.circles        | circle1: Circle, circle2: Circle | boolean
+function                        | arguments                          | return
+--------------------------------|------------------------------------|---------------
+Lib.intersection.rectPoint      | rect: IRect, point: IPoint         | boolean
+Lib.intersection.rects          | rect1: IRect, rect2: IRect         | boolean
+Lib.intersection.circlePoint    | circle: ICircle, point: IPoint     | boolean
+Lib.intersection.circles        | circle1: ICircle, circle2: ICircle | boolean
 
-#### Point:
+#### IPoint:
 parameter | type
 ----------|--------
 x	        | number
 y	        | number
 
-#### Rect:
+#### IRect:
 parameter | type
 ----------|--------
 x	        | number
@@ -53,7 +53,7 @@ y	        | number
 width     | number
 height    | number
 
-#### Circle:
+#### ICircle:
 parameter | type
 ----------|--------
 x	        | number
@@ -75,7 +75,6 @@ function                  | arguments                              | return
 Lib.square                | num: number                            | num * num
 Lib.loadScript            | scriptPath: string                     |
 Lib.addButtonListener     | id: string, f: (e: MouseEvent) => void |
-
 
 ### Move animator
 ``` ts
@@ -104,3 +103,63 @@ nextBounceX     | step?: number  | x + shiftX
 nextBounceY     | step?: number  | y + shiftY
 
 ![](./docs/images/moveAnimator.png)
+
+
+### Point
+``` ts
+const point = new Lib.Point(x: number, y: number);
+```
+
+#### Methods:
+method          | arguments                     | return
+----------------|-------------------------------|-----------
+intersectRect   | rect: IRect                   | boolean
+intersectCircle | circte: ICircle               | boolean
+fill          	| ctx: CanvasRenderingContext2D |
+stroke          | ctx: CanvasRenderingContext2D |
+copy          	|                               | Point
+getPoint        |                               | Point
+
+
+
+### Rect
+``` ts
+const rect = new Lib.Rect(x: number, y: number, width: number, height: number);
+const rect = new Lib.Rect.Create(point: IPoint, width: number, height: number);
+const rect = new Lib.Rect.Create2(point: IPoint, point2: IPoint);
+```
+
+#### Methods:
+method          | arguments                     | return
+----------------|-------------------------------|-----------
+intersectRect   | rect: IRect                   | boolean
+intersectPoint  | point: IPoint                 | boolean
+fill          	| ctx: CanvasRenderingContext2D |
+stroke          | ctx: CanvasRenderingContext2D |
+copy          	|                               | Rect
+getPoint        |                               | Point
+
+
+### Circle
+``` ts
+const rect = new Lib.Circle(x: number, y: number, r: number);
+const rect = new Lib.Circle.Create(point: IPoint, r: number);
+```
+
+#### Methods:
+method          | arguments                     | return
+----------------|-------------------------------|-----------
+intersectCircle | circte: ICircle               | boolean
+intersectPoint  | point: IPoint                 | boolean
+fill          	| ctx: CanvasRenderingContext2D |
+stroke          | ctx: CanvasRenderingContext2D |
+copy          	|                               | Circle
+getPoint        |                               | Point
+
+### IFigure
+parameter | type
+----------|------
+fill      |(ctx: CanvasRenderingContext2D) => void,
+stroke    |(ctx: CanvasRenderingContext2D) => void,
+copy      |() => IFigure,
+getPoint  |() => Point,
