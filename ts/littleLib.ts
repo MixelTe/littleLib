@@ -364,6 +364,7 @@ export class Rect
 	}
 }
 export class Point {
+	static r = 2;
 	constructor(
 		public x: number,
 		public y: number) { }
@@ -379,13 +380,13 @@ export class Point {
 	public fill(ctx: CanvasRenderingContext2D)
 	{
 		ctx.beginPath();
-		ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+		ctx.arc(this.x, this.y, Point.r, 0, Math.PI * 2);
 		ctx.fill();
 	}
 	public stroke(ctx: CanvasRenderingContext2D)
 	{
 		ctx.beginPath();
-		ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+		ctx.arc(this.x, this.y, Point.r, 0, Math.PI * 2);
 		ctx.stroke();
 	}
 	public copy()
