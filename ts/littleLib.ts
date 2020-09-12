@@ -145,11 +145,11 @@ function drawMouseCoordsOnCanvas(ctx: CanvasRenderingContext2D, x: number, y: nu
 
 
 //intersection
-function circlePointIntersect(circle: Circle, point: Point)
+function circlePointIntersect(circle: ICircle, point: IPoint)
 {
 	return circle.r * circle.r >= (circle.x - point.x) * (circle.x - point.x) + (circle.y - point.y) * (circle.y - point.y);
 }
-function rectPointIntersect(rect: Rect, point: Point)
+function rectPointIntersect(rect: IRect, point: IPoint)
 {
 	normalizeRect(rect);
 	return (
@@ -159,14 +159,14 @@ function rectPointIntersect(rect: Rect, point: Point)
 		point.y >= rect.y
 	);
 }
-function circlesIntersect(circle1: Circle, circle2: Circle)
+function circlesIntersect(circle1: ICircle, circle2: ICircle)
 {
 	const dx = circle1.x - circle2.x;
 	const dy = circle1.y - circle2.y;
 
 	return square(dx) + square(dy) < square(circle1.r + circle2.r);
 }
-function rectIntersect(rect1: Rect, rect2: Rect)
+function rectIntersect(rect1: IRect, rect2: IRect)
 {
 	normalizeRect(rect1);
 	normalizeRect(rect2);
@@ -177,7 +177,7 @@ function rectIntersect(rect1: Rect, rect2: Rect)
         rect2.y + rect2.height >= rect1.y
     );
 }
-function normalizeRect(rect: Rect)
+function normalizeRect(rect: IRect)
 {
 	if (rect.width < 0)
 	{
@@ -329,20 +329,20 @@ export class Rect
 		public width: number,
 		public height: number) { }
 
-	public static Create(point: Point, width: number, height: number)
+	public static Create(point: IPoint, width: number, height: number)
 	{
 		return new Rect(point.x, point.y, width, height);
 	}
-	public static Create2(point: Point, point2: Point)
+	public static Create2(point: IPoint, point2: IPoint)
 	{
 		return new Rect(point.x, point.y, point2.x - point.x, point2.y - point.y);
 	}
 
-	public intersectRect(rect: Rect)
+	public intersectRect(rect: IRect)
 	{
 		return rectIntersect(this, rect);
 	}
-	public intersectPoint(point: Point)
+	public intersectPoint(point: IPoint)
 	{
 		return rectPointIntersect(this, point);
 	}
@@ -368,11 +368,11 @@ export class Point {
 		public x: number,
 		public y: number) { }
 
-	public intersectRect(rect: Rect)
+	public intersectRect(rect: IRect)
 	{
 		return rectPointIntersect(rect, this);
 	}
-	public intersectCircle(circte: Circle)
+	public intersectCircle(circte: ICircle)
 	{
 		return circlePointIntersect(circte, this);
 	}
@@ -392,6 +392,10 @@ export class Point {
 	{
 		return new Point(this.x, this.y);
 	}
+	public getPoint()
+	{
+		return this.copy();
+	}
 }
 export class Circle {
 	constructor(
@@ -399,16 +403,16 @@ export class Circle {
 		public y: number,
 		public r: number) { }
 
-	public static Create(point: Point, r: number)
+	public static Create(point: IPoint, r: number)
 	{
 		return new Circle(point.x, point.y, r);
 	}
 
-	public intersectCircle(circle: Circle)
+	public intersectCircle(circle: ICircle)
 	{
 		return circlesIntersect(this, circle);
 	}
-	public intersectPoint(point: Point)
+	public intersectPoint(point: IPoint)
 	{
 		return circlePointIntersect(this, point);
 	}
@@ -434,3 +438,30 @@ export class Circle {
 	}
 }
 
+export interface IFigure
+{
+	fill(ctx: CanvasRenderingContext2D): void,
+	stroke(ctx: CanvasRenderingContext2D): void,
+	copy(): IFigure,
+	getPoint(): Point,
+}
+
+export interface IRect
+{
+	x: number,
+	y: number,
+	width: number,
+	height: number
+}
+
+export interface IPoint {
+	x: number,
+	y: number,
+}
+
+export interface ICircle
+{
+	x: number,
+	y: number,
+	r: number,
+}
