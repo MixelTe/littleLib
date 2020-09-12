@@ -329,6 +329,15 @@ export class Rect
 		public width: number,
 		public height: number) { }
 
+	public static Create(point: Point, width: number, height: number)
+	{
+		return new Rect(point.x, point.y, width, height);
+	}
+	public static Create2(point: Point, point2: Point)
+	{
+		return new Rect(point.x, point.y, point2.x - point.x, point2.y - point.y);
+	}
+
 	public intersectRect(rect: Rect)
 	{
 		return rectIntersect(this, rect);
@@ -345,8 +354,15 @@ export class Rect
 	{
 		ctx.strokeRect(this.x, this.y, this.width, this.height);
 	}
+	public copy()
+	{
+		return new Rect(this.x, this.y, this.width, this.height);
+	}
+	public getPoint()
+	{
+		return new Point(this.x, this.y);
+	}
 }
-
 export class Point {
 	constructor(
 		public x: number,
@@ -372,12 +388,21 @@ export class Point {
 		ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
 		ctx.stroke();
 	}
+	public copy()
+	{
+		return new Point(this.x, this.y);
+	}
 }
 export class Circle {
 	constructor(
 		public x: number,
 		public y: number,
 		public r: number) { }
+
+	public static Create(point: Point, r: number)
+	{
+		return new Circle(point.x, point.y, r);
+	}
 
 	public intersectCircle(circle: Circle)
 	{
@@ -399,4 +424,13 @@ export class Circle {
 		ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
 		ctx.stroke();
 	}
+	public copy()
+	{
+		return new Circle(this.x, this.y, this.r);
+	}
+	public getPoint()
+	{
+		return new Point(this.x, this.y);
+	}
 }
+
