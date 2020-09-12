@@ -321,19 +321,82 @@ export class MoveAnimator
 	}
 }
 
+export class Rect
+{
+	constructor(
+		public x: number,
+		public y: number,
+		public width: number,
+		public height: number) { }
 
-interface Rect {
-	x: number,
-	y: number,
-	width: number,
-	height: number
+	public intersectRect(rect: Rect)
+	{
+		return rectIntersect(this, rect);
+	}
+	public intersectPoint(point: Point)
+	{
+		return rectPointIntersect(this, point);
+	}
+	public fill(ctx: CanvasRenderingContext2D)
+	{
+		ctx.fillRect(this.x, this.y, this.width, this.height);
+	}
+	public stroke(ctx: CanvasRenderingContext2D)
+	{
+		ctx.strokeRect(this.x, this.y, this.width, this.height);
+	}
 }
-interface Point {
-	x: number,
-	y: number,
+
+export class Point {
+	constructor(
+		public x: number,
+		public y: number) { }
+
+	public intersectRect(rect: Rect)
+	{
+		return rectPointIntersect(rect, this);
+	}
+	public intersectCircle(circte: Circle)
+	{
+		return circlePointIntersect(circte, this);
+	}
+	public fill(ctx: CanvasRenderingContext2D)
+	{
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+		ctx.fill();
+	}
+	public stroke(ctx: CanvasRenderingContext2D)
+	{
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+		ctx.stroke();
+	}
 }
-interface Circle {
-	x: number,
-	y: number,
-	r: number,
+export class Circle {
+	constructor(
+		public x: number,
+		public y: number,
+		public r: number) { }
+
+	public intersectCircle(circle: Circle)
+	{
+		return circlesIntersect(this, circle);
+	}
+	public intersectPoint(point: Point)
+	{
+		return circlePointIntersect(this, point);
+	}
+	public fill(ctx: CanvasRenderingContext2D)
+	{
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+		ctx.fill();
+	}
+	public stroke(ctx: CanvasRenderingContext2D)
+	{
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+		ctx.stroke();
+	}
 }
