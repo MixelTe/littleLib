@@ -466,3 +466,39 @@ export interface ICircle
 	y: number,
 	r: number,
 }
+
+
+export function Div(classes?: string[] | string, children?: HTMLElement[], innerText?: string)
+{
+	return initEl("div", classes, children, innerText);
+}
+export function Span(classes?: string[] | string, children?: HTMLElement[], innerText?: string)
+{
+	return initEl("span", classes, children, innerText);
+}
+export function H1(classes?: string[] | string, children?: HTMLElement[], innerText?: string)
+{
+	return initEl("h1", classes, children, innerText);
+}
+export function Input(classes?: string[] | string, children?: HTMLElement[], innerText?: string)
+{
+	return initEl("input", classes, children, innerText);
+}
+export function Button(classes?: string[] | string, children?: HTMLElement[], innerText?: string)
+{
+	return initEl("button", classes, children, innerText);
+}
+
+function initEl<K extends keyof HTMLElementTagNameMap>(tagName: K, classes: string[] | string | undefined, children: HTMLElement[] | undefined, innerText: string | undefined)
+{
+	const el = document.createElement(tagName);
+	if (classes)
+	{
+		if (typeof classes == "string") el.classList.add(classes);
+		else classes.forEach(cs => el.classList.add(cs));
+	}
+	if (innerText) el.innerText = innerText;
+	if (children) children.forEach(ch => el.appendChild(ch));
+
+	return el;
+}

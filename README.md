@@ -76,6 +76,22 @@ Lib.square                | num: number                            | num * num
 Lib.loadScript            | scriptPath: string                     |
 Lib.addButtonListener     | id: string, f: (e: MouseEvent) => void |
 
+### HTML build
+function                  | return
+--------------------------|---------------
+Lib.Div                   | HTMLDivElement
+Lib.Span                  | HTMLSpanElement
+Lib.H1                    | HTMLHeadingElement
+Lib.Input                 | HTMLInputElement
+Lib.Button                | HTMLButtonElement
+
+#### Arguments
+function                  | type               
+--------------------------|--------------------
+classes                   | string[] | string  
+children                  | HTMLElement[]      
+innerText                 | string             
+
 ### Move animator
 ``` ts
 const moveAnimator =  new Lib.MoveAnimator(x, y, shiftX, shiftY, maxX, maxY, stepX, stepY);
