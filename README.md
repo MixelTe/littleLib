@@ -82,15 +82,18 @@ function                  | return
 Lib.Div                   | HTMLDivElement
 Lib.Span                  | HTMLSpanElement
 Lib.H1                    | HTMLHeadingElement
-Lib.Input                 | HTMLInputElement
-Lib.Button                | HTMLButtonElement
 
 #### Arguments
-function                  | type               
+function                  | type
 --------------------------|--------------------
-classes                   | string[] | string  
-children                  | HTMLElement[]      
-innerText                 | string             
+classes                   | string[] \| string
+children                  | HTMLElement[]
+innerText                 | string
+
+function                  | arguments | return
+--------------------------|-----------|---------------
+Lib.Input                 | classes?: string[] \| string, type?: string, placeholder?: string      | HTMLInputElement
+Lib.Button                | classes?: string[] \| string, innerText?: string, clickListener?: (btn: HTMLButtonElement) => void     | HTMLButtonElement
 
 ### Move animator
 ``` ts

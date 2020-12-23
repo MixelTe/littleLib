@@ -480,13 +480,18 @@ export function H1(classes?: string[] | string, children?: HTMLElement[], innerT
 {
 	return initEl("h1", classes, children, innerText);
 }
-export function Input(classes?: string[] | string, children?: HTMLElement[], innerText?: string)
+export function Input(classes?: string[] | string, type?: string, placeholder?: string)
 {
-	return initEl("input", classes, children, innerText);
+	const input = initEl("input", classes, undefined, undefined);
+	if (type) input.type = type;
+	if (placeholder) input.placeholder = placeholder;
+	return input;
 }
-export function Button(classes?: string[] | string, children?: HTMLElement[], innerText?: string)
+export function Button(classes?: string[] | string, innerText?: string, clickListener?: (btn: HTMLButtonElement) => void)
 {
-	return initEl("button", classes, children, innerText);
+	const button = initEl("button", classes, undefined, innerText);
+	if (clickListener) button.addEventListener("click", clickListener.bind(undefined, button));
+	return button;
 }
 
 function initEl<K extends keyof HTMLElementTagNameMap>(tagName: K, classes: string[] | string | undefined, children: HTMLElement[] | undefined, innerText: string | undefined)
