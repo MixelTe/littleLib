@@ -234,6 +234,36 @@ export function addButtonListener(id: string, f: (e: MouseEvent) => void)
 	const button = getButton(id);
 	button.addEventListener("click", f);
 }
+export function capitalize(text: string)
+{
+	return text.slice(0, 1).toUpperCase() + text.slice(1);
+}
+export function copyText(text: string)
+{
+	const el = document.createElement('textarea');
+	el.value = text;
+	el.setAttribute('readonly', '');
+	el.style.position = 'absolute';
+	el.style.left = '-9999px';
+	el.style.opacity = '0';
+	document.body.appendChild(el);
+	el.select();
+	document.execCommand('copy');
+	document.body.removeChild(el);
+}
+export function downloadFile(filename: string, text: string)
+{
+	var el = document.createElement('a');
+	el.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+	el.setAttribute('download', filename);
+
+	el.style.display = 'none';
+	document.body.appendChild(el);
+
+	el.click();
+
+	document.body.removeChild(el);
+}
 
 export class MoveAnimator
 {
