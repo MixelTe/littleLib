@@ -75,6 +75,9 @@ function                  | arguments                              | return
 Lib.square                | num: number                            | num * num
 Lib.loadScript            | scriptPath: string                     |
 Lib.addButtonListener     | id: string, f: (e: MouseEvent) => void |
+Lib.capitalize            | text: string                           | Text
+Lib.copyText              | text: string                           |
+Lib.downloadFile          | filename: string, text: string         |
 
 ### HTML build
 function                  | return
