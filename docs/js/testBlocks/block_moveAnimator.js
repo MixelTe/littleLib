@@ -1,4 +1,5 @@
 import * as Lib from "../littleLib.js";
+import * as FLib from "../figuresLib.js";
 import { Rect } from "./drawing.js";
 const speedX = 10;
 const speedY = 10;
@@ -7,13 +8,13 @@ const height = 50;
 const canvasNext = Lib.get.canvas("canvas_moveAnimator_next");
 const next = {
     ctx: Lib.canvas.getContext2d(canvasNext),
-    moveAnimator: new Lib.MoveAnimator(0, 0, 0, 0, 0, 0, 0, 0),
+    moveAnimator: new FLib.MoveAnimator(0, 0, 0, 0, 0, 0, 0, 0),
     rect: new Rect(0, 0, width, height),
 };
 const canvasBounce = Lib.get.canvas("canvas_moveAnimator_nextBounce");
 const bounce = {
     ctx: Lib.canvas.getContext2d(canvasBounce),
-    moveAnimator: new Lib.MoveAnimator(0, 0, 0, 0, 0, 0, 0, 0),
+    moveAnimator: new FLib.MoveAnimator(0, 0, 0, 0, 0, 0, 0, 0),
     rect: new Rect(0, 0, width, height),
 };
 export function run() {
@@ -36,8 +37,8 @@ function resizeAllCanvas() {
     resetCanvas(canvasBounce);
     Lib.canvas.fitToParent.ClientWH(canvasNext);
     Lib.canvas.fitToParent.ClientWH(canvasBounce);
-    next.moveAnimator = new Lib.MoveAnimator(Math.round((canvasNext.width - width) / 2), Math.round((canvasNext.height - height) / 2), 0, 0, canvasNext.width - width, canvasNext.height - height, speedX, speedY);
-    bounce.moveAnimator = new Lib.MoveAnimator(Math.round((canvasBounce.width - width) / 2), Math.round((canvasBounce.height - height) / 2), 0, 0, canvasBounce.width - width, canvasBounce.height - height, speedX, speedY);
+    next.moveAnimator = new FLib.MoveAnimator(Math.round((canvasNext.width - width) / 2), Math.round((canvasNext.height - height) / 2), 0, 0, canvasNext.width - width, canvasNext.height - height, speedX, speedY);
+    bounce.moveAnimator = new FLib.MoveAnimator(Math.round((canvasBounce.width - width) / 2), Math.round((canvasBounce.height - height) / 2), 0, 0, canvasBounce.width - width, canvasBounce.height - height, speedX, speedY);
     redrawAll();
 }
 function resetCanvas(canvas) {

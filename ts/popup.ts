@@ -1,5 +1,5 @@
 interface PopupEvenListener {
-	"close": (confirmed: boolean, popup: Popup) => void;
+	"close": (popup: Popup, confirmed: boolean) => void;
 	"ok": (popup: Popup) => void;
 	"cancel": (popup: Popup) => void;
 }
@@ -24,9 +24,9 @@ export class Popup
 	public closeOnBackClick = true;
 	public closeEscape = true;
 
-	private onClose: ((confirmed: boolean, popup: Popup) => void)[] = [];
-	private onOk: ((popup: Popup) => void)[] = [];
-	private onCancel: ((popup: Popup) => void)[] = [];
+	private onClose: PopupEvenListener["close"][] = [];
+	private onOk: PopupEvenListener["ok"][] = [];
+	private onCancel: PopupEvenListener["cancel"][] = [];
 	private body = Div("popup");
 	private titleEl = Div("popup-title");
 	private cancelBtnEl = Button([], "Cancel", this.close.bind(this, false));
@@ -70,7 +70,7 @@ export class Popup
 	private fireEvent(type: keyof PopupEvenListener, confirmed = false)
 	{
 		switch (type) {
-			case "close": this.onClose.forEach(f => f(confirmed, this)); break;
+			case "close": this.onClose.forEach(f => f(this, confirmed)); break;
 			case "ok": this.onOk.forEach(f => f(this)); break;
 			case "cancel": this.onCancel.forEach(f => f(this)); break;
 			default: throw new Error(`Listener can be: "close", "ok" or "cancel". Input: ${type}`);

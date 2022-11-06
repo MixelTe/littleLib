@@ -1,9 +1,11 @@
 export class DrawObj {
 }
 export class Point extends DrawObj {
+    x;
+    y;
+    r = 2;
     constructor(x, y) {
         super();
-        this.r = 2;
         this.x = x;
         this.y = y;
     }
@@ -18,6 +20,11 @@ export class Point extends DrawObj {
     }
 }
 export class Rect extends DrawObj {
+    x;
+    y;
+    width;
+    height;
+    color;
     constructor(x, y, width, height, color = "transparent") {
         super();
         this.x = x;
@@ -37,6 +44,10 @@ export class Rect extends DrawObj {
     }
 }
 export class Circle extends DrawObj {
+    x;
+    y;
+    r;
+    color;
     constructor(x, y, r, color) {
         super();
         this.x = x;
@@ -59,9 +70,11 @@ export class Circle extends DrawObj {
     }
 }
 export class Text_isIntersect extends DrawObj {
+    x;
+    y;
+    intersect = false;
     constructor(x, y) {
         super();
-        this.intersect = false;
         this.x = x;
         this.y = y;
     }
@@ -77,6 +90,9 @@ export class Text_isIntersect extends DrawObj {
     }
 }
 export class Text_simple extends DrawObj {
+    x;
+    y;
+    text;
     constructor(x, y, text) {
         super();
         this.x = x;

@@ -1,21 +1,5 @@
 export class Popup {
-    constructor() {
-        this.content = Div();
-        this.closeOnBackClick = true;
-        this.closeEscape = true;
-        this.onClose = [];
-        this.onOk = [];
-        this.onCancel = [];
-        this.body = Div("popup");
-        this.titleEl = Div("popup-title");
-        this.cancelBtnEl = Button([], "Cancel", this.close.bind(this, false));
-        this.okBtnEl = Button([], "OK", this.close.bind(this, true));
-        this.closeBtnEl = Button("popup-close", "x", this.close.bind(this, false));
-        this.footer = Div("popup-footer", [this.cancelBtnEl, this.okBtnEl]);
-        this.focusEl = "ok";
-        this.resolve = null;
-        this.onKeyUp = () => { };
-    }
+    content = Div();
     set title(v) { this.titleEl.innerText = v; }
     get title() { return this.titleEl.innerText; }
     set cancelText(v) { this.cancelBtnEl.innerText = v; }
@@ -32,6 +16,20 @@ export class Popup {
     ;
     set reverse(v) { this.footer.classList.toggle("popup-footer-reverse", v); }
     get reverse() { return this.footer.classList.contains("popup-footer-reverse"); }
+    closeOnBackClick = true;
+    closeEscape = true;
+    onClose = [];
+    onOk = [];
+    onCancel = [];
+    body = Div("popup");
+    titleEl = Div("popup-title");
+    cancelBtnEl = Button([], "Cancel", this.close.bind(this, false));
+    okBtnEl = Button([], "OK", this.close.bind(this, true));
+    closeBtnEl = Button("popup-close", "x", this.close.bind(this, false));
+    footer = Div("popup-footer", [this.cancelBtnEl, this.okBtnEl]);
+    focusEl = "ok";
+    resolve = null;
+    onKeyUp = () => { };
     openPopup() {
         this.body = Div("popup");
         this.body.appendChild(Div("popup-block", [
@@ -65,7 +63,7 @@ export class Popup {
     fireEvent(type, confirmed = false) {
         switch (type) {
             case "close":
-                this.onClose.forEach(f => f(confirmed, this));
+                this.onClose.forEach(f => f(this, confirmed));
                 break;
             case "ok":
                 this.onOk.forEach(f => f(this));

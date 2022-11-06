@@ -3,36 +3,47 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>littelLib</title>
-	<script src="out/main.js" type="module"></script>
+	<title>littleLib</title>
+	<script src="js/main.js" type="module"></script>
 	<link rel="stylesheet" type="text/css" href="popup.css">
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT Sans|PT Sans Caption|PT Mono">
 	<style>
 		.sorceCode {
+			border-bottom: 2px solid black;
+			font-size: 1.4rem;
+			height: 3rem;
 			display: flex;
-			background-color: aqua;
-			border-radius: 10px;
-			height: 30px;
-			width: 110px;
-			justify-content: center;
 			align-items: center;
-			text-decoration: none;
-			color: blue;
+			padding-left: 1em;
 		}
-
-		.sorceCode div {
+		.sorceCode a {
+			text-decoration-skip-ink: none;
+			text-decoration: none;
+			display: flex;
+			align-items: center;
+		}
+		.sorceCode a:hover, .sorceCode a:focus-visible {
+			text-decoration: underline;
+		}
+		.sorceCode a::before {
+			content: "";
 			display: inline-block;
-			font-size: 22px;
+			width: 1.3em;
+			height: 1.3em;
+			background-image: url(./github.ico);
+			background-size: 100%;
+			margin-right: 0.6em;
 		}
 	</style>
 </head>
 <body>
-	<a href="https://github.com/MixelTe/littelLib" class="sorceCode" target="_blank">
-		<div>source code</div>
-	</a>
+	<div class="sorceCode">
+		<a href="https://github.com/MixelTe/littelLib" target="_blank">Source code</a>
+	</div>
+
 	<div class="block">
-		<h1 class="block-head">Canvas</h1>
+		<h1 class="block-head">Canvas <span class="text-small">(littleLib)</span></h1>
 		<div class="block-body">
 
 			<div class="box" style="width: 100%;">
@@ -53,7 +64,7 @@
 
 
 	<div class="block">
-		<h1 class="block-head">Intersections</h1>
+		<h1 class="block-head">Intersections <span class="text-small">(littleLib)</span></h1>
 		<div class="block-body">
 
 			<div class="box">
@@ -108,7 +119,7 @@
 	</div>
 
 	<div class="block">
-		<h1 class="block-head">Random</h1>
+		<h1 class="block-head">Random <span class="text-small">(littleLib)</span></h1>
 		<div class="block-body">
 
 			<div class="box" style="width: 100%;">
@@ -196,36 +207,7 @@
 	</div>
 
 	<div class="block">
-		<h1 class="block-head">Move animator</h1>
-		<div class="block-body">
-
-			<div class="box" style="width: 100%;">
-				<h2 class="box-head">next x</h2>
-				<div class="box-body">
-					<div class="canvasConteiner">
-						<canvas id="canvas_moveAnimator_next"></canvas>
-					</div>
-				</div>
-				<div class="box-bottom">
-				</div>
-			</div>
-
-			<div class="box" style="width: 100%;">
-				<h2 class="box-head">next bounce x</h2>
-				<div class="box-body">
-					<div class="canvasConteiner">
-						<canvas id="canvas_moveAnimator_nextBounce"></canvas>
-					</div>
-				</div>
-				<div class="box-bottom">
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<div class="block">
-		<h1 class="block-head">Pop-up</h1>
+		<h1 class="block-head">Pop-up <span class="text-small">(popup)</span></h1>
 		<div class="block-body">
 
 			<div class="box" style="width: 100%;">
@@ -255,9 +237,38 @@
 		</div>
 	</div>
 
-	<a href="https://github.com/MixelTe/littelLib" class="sorceCode" target="_blank">
-		<div>source code</div>
-	</a>
+	<div class="block">
+		<h1 class="block-head">Move animator <span class="text-small">(figuresLib)</span></h1>
+		<div class="block-body">
+
+			<div class="box" style="width: 100%;">
+				<h2 class="box-head">next x</h2>
+				<div class="box-body">
+					<div class="canvasConteiner">
+						<canvas id="canvas_moveAnimator_next"></canvas>
+					</div>
+				</div>
+				<div class="box-bottom">
+				</div>
+			</div>
+
+			<div class="box" style="width: 100%;">
+				<h2 class="box-head">next bounce x</h2>
+				<div class="box-body">
+					<div class="canvasConteiner">
+						<canvas id="canvas_moveAnimator_nextBounce"></canvas>
+					</div>
+				</div>
+				<div class="box-bottom">
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="sorceCode">
+		<a href="https://github.com/MixelTe/littelLib" target="_blank">Source code</a>
+	</div>
 </body>
 </html>
 

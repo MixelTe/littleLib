@@ -21,12 +21,11 @@ export const intersection = {
 };
 export const random = {
     int: randomInt,
-    intFrom: randomIntFrom,
     boolean: random_boolean,
     asbOrNot: random_asbOrNot,
 };
 //get
-function getButton(id) {
+export function getButton(id) {
     const el = document.getElementById(id);
     if (el == null)
         throw new Error(`${id} not found`);
@@ -34,7 +33,7 @@ function getButton(id) {
         return el;
     throw new Error(`${id} element not Button`);
 }
-function getDiv(id) {
+export function getDiv(id) {
     const el = document.getElementById(id);
     if (el == null)
         throw new Error(`${id} not found`);
@@ -42,7 +41,7 @@ function getDiv(id) {
         return el;
     throw new Error(`${id} element not Div`);
 }
-function getCanvas(id) {
+export function getCanvas(id) {
     const el = document.getElementById(id);
     if (el == null)
         throw new Error(`${id} not found`);
@@ -50,7 +49,7 @@ function getCanvas(id) {
         return el;
     throw new Error(`${id} element not Canvas`);
 }
-function getInput(id) {
+export function getInput(id) {
     const el = document.getElementById(id);
     if (el == null)
         throw new Error(`${id} not found`);
@@ -59,13 +58,13 @@ function getInput(id) {
     throw new Error(`${id} element not Input`);
 }
 //canvas
-function getCanvasContext(canvas) {
+export function getCanvasContext(canvas) {
     const ctx = canvas.getContext("2d");
     if (ctx == null)
         throw new Error(`Context is null`);
     return ctx;
 }
-function CanvasFitToParentBCR(canvas) {
+export function CanvasFitToParentBCR(canvas) {
     const parent = canvas.parentElement;
     if (parent == null)
         throw new Error("Canvas parent not found");
@@ -77,7 +76,7 @@ function CanvasFitToParentBCR(canvas) {
     canvas.height = h;
     canvas.style.height = `${h}px`;
 }
-function CanvasFitToParentClientWH(canvas) {
+export function CanvasFitToParentClientWH(canvas) {
     const parent = canvas.parentElement;
     if (parent == null)
         throw new Error("Canvas parent not found");
@@ -88,7 +87,7 @@ function CanvasFitToParentClientWH(canvas) {
     canvas.height = h;
     canvas.style.height = `${h}px`;
 }
-function drawGridOnCanvas(ctx, cellSize, color = "black") {
+export function drawGridOnCanvas(ctx, cellSize, color = "black") {
     const canvasWidth = ctx.canvas.width;
     const canvasHeight = ctx.canvas.height;
     ctx.save();
@@ -106,7 +105,7 @@ function drawGridOnCanvas(ctx, cellSize, color = "black") {
     ctx.stroke();
     ctx.restore();
 }
-function drawMouseCoordsOnCanvas(ctx, x, y) {
+export function drawMouseCoordsOnCanvas(ctx, x, y) {
     const space = 2;
     const width = ctx.canvas.width;
     const height = ctx.canvas.height;
@@ -129,22 +128,22 @@ function drawMouseCoordsOnCanvas(ctx, x, y) {
     ctx.restore();
 }
 //intersection
-function circlePointIntersect(circle, point) {
+export function circlePointIntersect(circle, point) {
     return circle.r * circle.r >= (circle.x - point.x) * (circle.x - point.x) + (circle.y - point.y) * (circle.y - point.y);
 }
-function rectPointIntersect(rect, point) {
+export function rectPointIntersect(rect, point) {
     normalizeRect(rect);
     return (rect.x + rect.width >= point.x &&
         point.x >= rect.x &&
         rect.y + rect.height >= point.y &&
         point.y >= rect.y);
 }
-function circlesIntersect(circle1, circle2) {
+export function circlesIntersect(circle1, circle2) {
     const dx = circle1.x - circle2.x;
     const dy = circle1.y - circle2.y;
     return square(dx) + square(dy) < square(circle1.r + circle2.r);
 }
-function rectIntersect(rect1, rect2) {
+export function rectIntersect(rect1, rect2) {
     normalizeRect(rect1);
     normalizeRect(rect2);
     return (rect1.x + rect1.width >= rect2.x &&
@@ -152,7 +151,7 @@ function rectIntersect(rect1, rect2) {
         rect1.y + rect1.height >= rect2.y &&
         rect2.y + rect2.height >= rect1.y);
 }
-function normalizeRect(rect) {
+export function normalizeRect(rect) {
     if (rect.width < 0) {
         rect.x += rect.width;
         rect.width = Math.abs(rect.width);
@@ -163,21 +162,16 @@ function normalizeRect(rect) {
     }
 }
 //random
-function random_asbOrNot(num) {
-    if (Math.random() < 0.5)
-        return num;
-    return -num;
+export function random_asbOrNot(num) {
+    return Math.random() < 0.5 ? num : -num;
 }
-function random_boolean() {
-    if (Math.random() < 0.5)
-        return true;
-    return false;
+export function random_boolean() {
+    return Math.random() < 0.5;
 }
-function randomInt(bound) {
-    return Math.floor(Math.random() * bound);
-}
-function randomIntFrom(start, bound) {
-    return Math.floor(Math.random() * (bound - start)) + start;
+export function randomInt(maxmin, max) {
+    if (max != undefined)
+        return Math.floor(Math.random() * (maxmin - max)) + max;
+    return Math.floor(Math.random() * maxmin);
 }
 //other
 export function square(num) {
@@ -216,177 +210,6 @@ export function downloadFile(filename, text) {
     el.click();
     document.body.removeChild(el);
 }
-export class MoveAnimator {
-    constructor(x, y, shiftX, shiftY, maxX, maxY, stepX, stepY) {
-        this.x = x;
-        this.y = y;
-        this.shiftX = shiftX;
-        this.shiftY = shiftY;
-        this.maxX = maxX;
-        this.maxY = maxY;
-        this.stepX = stepX;
-        this.stepY = stepY;
-    }
-    X() {
-        if (this.x > this.maxX)
-            return this.maxX - (this.x - this.maxX) + this.shiftX;
-        return this.x + this.shiftX;
-    }
-    Y() {
-        if (this.y > this.maxY)
-            return this.maxY - (this.y - this.maxY) + this.shiftY;
-        return this.y + this.shiftY;
-    }
-    nextX(step) {
-        if (step == undefined) {
-            if (typeof this.stepX == "number")
-                this.x += this.stepX;
-            else
-                this.x += this.stepX();
-        }
-        else
-            this.x += step;
-        this.x %= this.maxX;
-        return this.x + this.shiftX;
-    }
-    nextY(step) {
-        if (step == undefined) {
-            if (typeof this.stepY == "number")
-                this.y += this.stepY;
-            else
-                this.y += this.stepY();
-        }
-        else
-            this.y += step;
-        this.y %= this.maxY;
-        return this.y + this.shiftY;
-    }
-    nextBounceX(step) {
-        if (step == undefined) {
-            if (typeof this.stepX == "number")
-                this.x += this.stepX;
-            else
-                this.x += this.stepX();
-        }
-        else
-            this.x += step;
-        this.x %= this.maxX * 2;
-        if (this.x > this.maxX)
-            return this.maxX - (this.x - this.maxX) + this.shiftX;
-        return this.x + this.shiftX;
-    }
-    nextBounceY(step) {
-        if (step == undefined) {
-            if (typeof this.stepY == "number")
-                this.y += this.stepY;
-            else
-                this.y += this.stepY();
-        }
-        else
-            this.y += step;
-        this.y %= this.maxY * 2;
-        if (this.y > this.maxY)
-            return this.maxY - (this.y - this.maxY) + this.shiftY;
-        return this.y + this.shiftY;
-    }
-}
-export class Rect {
-    constructor(x, y, width, height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-    static Create(point, width, height) {
-        return new Rect(point.x, point.y, width, height);
-    }
-    static Create2(point, point2) {
-        return new Rect(point.x, point.y, point2.x - point.x, point2.y - point.y);
-    }
-    intersectRect(rect) {
-        return rectIntersect(this, rect);
-    }
-    intersectPoint(point) {
-        return rectPointIntersect(this, point);
-    }
-    fill(ctx) {
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-    stroke(ctx) {
-        ctx.strokeRect(this.x, this.y, this.width, this.height);
-    }
-    copy() {
-        return new Rect(this.x, this.y, this.width, this.height);
-    }
-    getPoint() {
-        return new Point(this.x, this.y);
-    }
-}
-let Point = /** @class */ (() => {
-    class Point {
-        constructor(x, y) {
-            this.x = x;
-            this.y = y;
-        }
-        intersectRect(rect) {
-            return rectPointIntersect(rect, this);
-        }
-        intersectCircle(circte) {
-            return circlePointIntersect(circte, this);
-        }
-        fill(ctx) {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, Point.r, 0, Math.PI * 2);
-            ctx.fill();
-        }
-        stroke(ctx) {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, Point.r, 0, Math.PI * 2);
-            ctx.stroke();
-        }
-        copy() {
-            return new Point(this.x, this.y);
-        }
-        getPoint() {
-            return this.copy();
-        }
-    }
-    Point.r = 2;
-    return Point;
-})();
-export { Point };
-export class Circle {
-    constructor(x, y, r) {
-        this.x = x;
-        this.y = y;
-        this.r = r;
-    }
-    static Create(point, r) {
-        return new Circle(point.x, point.y, r);
-    }
-    intersectCircle(circle) {
-        return circlesIntersect(this, circle);
-    }
-    intersectPoint(point) {
-        return circlePointIntersect(this, point);
-    }
-    fill(ctx) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.fill();
-    }
-    stroke(ctx) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-        ctx.stroke();
-    }
-    copy() {
-        return new Circle(this.x, this.y, this.r);
-    }
-    getPoint() {
-        return new Point(this.x, this.y);
-    }
-}
 export function Div(classes, children, innerText) {
     return initEl("div", classes, children, innerText);
 }
@@ -407,10 +230,10 @@ export function Input(classes, type, placeholder) {
 export function Button(classes, innerText, clickListener) {
     const button = initEl("button", classes, undefined, innerText);
     if (clickListener)
-        button.addEventListener("click", clickListener.bind(undefined, button));
+        button.addEventListener("click", clickListener.bind(button, button));
     return button;
 }
-function initEl(tagName, classes, children, innerText) {
+export function initEl(tagName, classes, children, innerText) {
     const el = document.createElement(tagName);
     if (classes) {
         if (typeof classes == "string")
