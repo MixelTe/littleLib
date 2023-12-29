@@ -3,13 +3,11 @@ export const get = {
     button: getButton,
     canvas: getCanvas,
     input: getInput,
+    el: getEl,
 };
 export const canvas = {
     getContext2d: getCanvasContext,
-    fitToParent: {
-        BCR: CanvasFitToParentBCR,
-        ClientWH: CanvasFitToParentClientWH,
-    },
+    fitToParent: CanvasFitToParentClientWH,
     drawGrid: drawGridOnCanvas,
     drawCoords: drawMouseCoordsOnCanvas,
 };
@@ -20,42 +18,43 @@ export const intersection = {
     circles: circlesIntersect,
 };
 export const random = {
+    withSeed: randomWithSeed,
     int: randomInt,
     boolean: random_boolean,
     asbOrNot: random_asbOrNot,
+    shuffle: shuffle,
+    shuffledWithWeights: shuffledWithWeights,
+    color: randomColor,
+};
+export const other = {
+    square,
+    loadScript,
+    addButtonListener,
+    capitalize,
+    copyText,
+    downloadFile,
+    wait,
 };
 //get
 export function getButton(id) {
-    const el = document.getElementById(id);
-    if (el == null)
-        throw new Error(`${id} not found`);
-    if (el instanceof HTMLButtonElement)
-        return el;
-    throw new Error(`${id} element not Button`);
+    return getEl(id, HTMLButtonElement);
 }
 export function getDiv(id) {
-    const el = document.getElementById(id);
-    if (el == null)
-        throw new Error(`${id} not found`);
-    if (el instanceof HTMLDivElement)
-        return el;
-    throw new Error(`${id} element not Div`);
+    return getEl(id, HTMLDivElement);
 }
 export function getCanvas(id) {
-    const el = document.getElementById(id);
-    if (el == null)
-        throw new Error(`${id} not found`);
-    if (el instanceof HTMLCanvasElement)
-        return el;
-    throw new Error(`${id} element not Canvas`);
+    return getEl(id, HTMLCanvasElement);
 }
 export function getInput(id) {
+    return getEl(id, HTMLInputElement);
+}
+export function getEl(id, type) {
     const el = document.getElementById(id);
     if (el == null)
         throw new Error(`${id} not found`);
-    if (el instanceof HTMLInputElement)
+    if (el instanceof type)
         return el;
-    throw new Error(`${id} element not Input`);
+    throw new Error(`${id} element not ${type.name}`);
 }
 //canvas
 export function getCanvasContext(canvas) {
@@ -162,16 +161,35 @@ export function normalizeRect(rect) {
     }
 }
 //random
-export function random_asbOrNot(num) {
-    return Math.random() < 0.5 ? num : -num;
+export function random_asbOrNot(num, rnd = Math.random) {
+    return rnd() < 0.5 ? num : -num;
 }
-export function random_boolean() {
-    return Math.random() < 0.5;
+export function random_boolean(rnd = Math.random) {
+    return rnd() < 0.5;
 }
-export function randomInt(maxmin, max) {
+export function randomInt(maxmin, max, rnd = Math.random) {
     if (max != undefined)
-        return Math.floor(Math.random() * (maxmin - max)) + max;
-    return Math.floor(Math.random() * maxmin);
+        return Math.floor(rnd() * (maxmin - max)) + max;
+    return Math.floor(rnd() * maxmin);
+}
+export function shuffle(array, rnd = Math.random) {
+    return array.sort(() => 0.5 - rnd());
+}
+export function shuffledWithWeights(array, weights, rnd = Math.random) {
+    if (array.length != weights.length)
+        console.error("LittleLib.shuffledWithWeights: array.length != weights.length");
+    return array.map((v, i) => ({ v, w: rnd() * 0.5 + weights[i] * rnd() })).sort((a, b) => b.w - a.w).map(v => v.v);
+}
+export function randomColor(rnd = Math.random) {
+    return hslColor(randomInt(0, 360, rnd), randomInt(80, 100, rnd), randomInt(40, 80, rnd));
+}
+export function randomWithSeed(seed) {
+    return function () {
+        var t = seed += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
 }
 //other
 export function square(num) {
@@ -210,40 +228,74 @@ export function downloadFile(filename, text) {
     el.click();
     document.body.removeChild(el);
 }
-export function Div(classes, children, innerText) {
-    return initEl("div", classes, children, innerText);
+export async function wait(t) {
+    return new Promise(res => setTimeout(res, t));
 }
-export function Span(classes, children, innerText) {
-    return initEl("span", classes, children, innerText);
+/**
+ *
+ * @param h in range [0; 360]
+ * @param s in range [0; 100]
+ * @param l in range [0; 100]
+ * @returns `hsl(${h}, ${s}%, ${l}%)`
+ */
+export function hslColor(h, s, l) {
+    return `hsl(${h}, ${s}%, ${l}%)`;
 }
-export function H1(classes, children, innerText) {
-    return initEl("h1", classes, children, innerText);
+export function SetContent(parent, children) {
+    parent.innerHTML = "";
+    AppendContent(parent, children);
+}
+export function AppendContent(parent, children) {
+    if (children instanceof Array)
+        children.forEach(ch => parent.append(ch));
+    else
+        parent.append(children);
+}
+export function Div(classes, children) {
+    return initEl("div", classes, children);
+}
+export function Span(classes, children) {
+    return initEl("span", classes, children);
+}
+export function H1(classes, children) {
+    return initEl("h1", classes, children);
+}
+export function Table(classes, children) {
+    return initEl("table", classes, children);
+}
+export function TR(classes, children) {
+    return initEl("tr", classes, children);
+}
+export function TD(classes, children) {
+    return initEl("td", classes, children);
 }
 export function Input(classes, type, placeholder) {
-    const input = initEl("input", classes, undefined, undefined);
+    const input = initEl("input", classes, undefined);
     if (type)
         input.type = type;
     if (placeholder)
         input.placeholder = placeholder;
     return input;
 }
-export function Button(classes, innerText, clickListener) {
-    const button = initEl("button", classes, undefined, innerText);
+export function Button(classes, children, clickListener) {
+    const button = initEl("button", classes, children);
     if (clickListener)
         button.addEventListener("click", clickListener.bind(button, button));
     return button;
 }
-export function initEl(tagName, classes, children, innerText) {
+export function initEl(tagName, classes, children) {
     const el = document.createElement(tagName);
     if (classes) {
         if (typeof classes == "string")
             el.classList.add(classes);
         else
-            classes.forEach(cs => el.classList.add(cs));
+            classes.forEach(cs => cs && el.classList.add(cs));
     }
-    if (innerText)
-        el.innerText = innerText;
-    if (children)
-        children.forEach(ch => el.appendChild(ch));
+    if (children) {
+        if (children instanceof Array)
+            children.forEach(ch => el.append(ch));
+        else
+            el.append(children);
+    }
     return el;
 }

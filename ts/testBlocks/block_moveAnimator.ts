@@ -46,8 +46,8 @@ function resizeAllCanvas()
 	resetCanvas(canvasNext);
 	resetCanvas(canvasBounce);
 
-	Lib.canvas.fitToParent.ClientWH(canvasNext);
-	Lib.canvas.fitToParent.ClientWH(canvasBounce);
+	Lib.canvas.fitToParent(canvasNext);
+	Lib.canvas.fitToParent(canvasBounce);
 
 	next.moveAnimator = new FLib.MoveAnimator(Math.round((canvasNext.width - width) / 2), Math.round((canvasNext.height - height) / 2), 0, 0, canvasNext.width - width, canvasNext.height - height, speedX, speedY);
 	bounce.moveAnimator = new FLib.MoveAnimator(Math.round((canvasBounce.width - width) / 2), Math.round((canvasBounce.height - height) / 2), 0, 0, canvasBounce.width - width, canvasBounce.height - height, speedX, speedY);

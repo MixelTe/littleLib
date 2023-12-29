@@ -67,3 +67,27 @@ h1 {
 	color: blue;
 	width: 2em;
 }
+
+.circles {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 0.4em;
+}
+.circle {
+	width: 2em;
+	height: 2em;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.shuffle {
+	position: relative;
+	height: 8em;
+}
+.shuffle .circle {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	transition-property: left, top;
+	transition-duration: 200ms;
+}

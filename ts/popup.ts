@@ -31,14 +31,14 @@ export class Popup
 	private titleEl = Div("popup-title");
 	private cancelBtnEl = Button([], "Cancel", this.close.bind(this, false));
 	private okBtnEl = Button([], "OK", this.close.bind(this, true));
-	private closeBtnEl = Button("popup-close", "x", this.close.bind(this, false));
+	private closeBtnEl = Button("popup-close", "", this.close.bind(this, false));
 	private footer = Div("popup-footer", [this.cancelBtnEl, this.okBtnEl]);
 	private focusEl: FocusEls = "ok";
 	private resolve: ((value: boolean) => void) | null = null;
 	private onKeyUp: (e: KeyboardEvent) => void = () => {};
 	protected openPopup()
 	{
-		this.body = Div("popup");
+		this.body = Div(["popup", "popup-hidden"]);
 		this.body.appendChild(Div("popup-block", [
 			Div("popup-header", [
 				this.titleEl,
@@ -57,11 +57,13 @@ export class Popup
 		}
 		window.addEventListener("keyup", this.onKeyUp);
 		document.body.appendChild(this.body);
+		setTimeout(() => this.body.classList.remove("popup-hidden"), 1);
 		this.setFocus();
 	}
 	public close(confirmed: boolean)
 	{
-		document.body.removeChild(this.body);
+		this.body.classList.add("popup-hidden");
+		setTimeout(() => document.body.removeChild(this.body), 250);
 		window.removeEventListener("keyup", this.onKeyUp);
 		this.fireEvent(confirmed ? "ok" : "cancel");
 		this.fireEvent("close", confirmed);
