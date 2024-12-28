@@ -10,6 +10,7 @@ export const canvas = {
 	fitToParent: CanvasFitToParentClientWH,
 	drawGrid: drawGridOnCanvas,
 	drawCoords: drawMouseCoordsOnCanvas,
+	saveAsPng: saveCanvasAsPng,
 }
 export const intersection = {
 	rectPoint: rectPointIntersect,
@@ -22,6 +23,7 @@ export const random = {
 	int: randomInt,
 	boolean: random_boolean,
 	asbOrNot: random_asbOrNot,
+	choose: chooseRandom,
 	shuffle: shuffle,
 	shuffledWithWeights: shuffledWithWeights,
 	color: randomColor,
@@ -33,7 +35,13 @@ export const other = {
 	capitalize,
 	copyText,
 	downloadFile,
+	openTextFile,
 	wait,
+	hslColor,
+	rgbColor,
+	lerp,
+	dateNow,
+	numNoun,
 }
 
 
@@ -101,22 +109,22 @@ export function drawGridOnCanvas(ctx: CanvasRenderingContext2D, cellSize: number
 	const canvasWidth = ctx.canvas.width;
 	const canvasHeight = ctx.canvas.height;
 
-    ctx.save();
+	ctx.save();
 	ctx.strokeStyle = color;
 	ctx.lineWidth = 2;
 	ctx.beginPath();
-    for (let x = cellSize; x < canvasWidth; x += cellSize)
+	for (let x = cellSize; x < canvasWidth; x += cellSize)
 	{
 		ctx.moveTo(x, 0);
 		ctx.lineTo(x, canvasHeight);
 	}
-    for (let y = cellSize; y < canvasWidth; y += cellSize)
+	for (let y = cellSize; y < canvasWidth; y += cellSize)
 	{
 		ctx.moveTo(0, y);
 		ctx.lineTo(canvasWidth, y);
 	}
 	ctx.stroke();
-    ctx.restore();
+	ctx.restore();
 }
 export function drawMouseCoordsOnCanvas(ctx: CanvasRenderingContext2D, x: number, y: number)
 {
@@ -148,6 +156,23 @@ export function drawMouseCoordsOnCanvas(ctx: CanvasRenderingContext2D, x: number
 	ctx.fillText(text, width - ctx.measureText(text).width - 2, height - 3);
 	ctx.restore();
 }
+/**
+ * @param fname *.png
+ */
+export function saveCanvasAsPng(canvas: HTMLCanvasElement, fname: string)
+{
+	const a = document.createElement("a");
+	a.setAttribute("download", fname);
+
+	canvas.toBlob(blob =>
+	{
+		if (!blob) return;
+		const url = URL.createObjectURL(blob);
+		a.setAttribute("href", url);
+		a.click();
+		URL.revokeObjectURL(url);
+	});
+}
 
 
 //intersection
@@ -176,12 +201,12 @@ export function rectIntersect(rect1: IRect, rect2: IRect)
 {
 	normalizeRect(rect1);
 	normalizeRect(rect2);
-    return (
-        rect1.x + rect1.width >= rect2.x &&
-        rect2.x + rect2.width >= rect1.x &&
-        rect1.y + rect1.height >= rect2.y &&
-        rect2.y + rect2.height >= rect1.y
-    );
+	return (
+		rect1.x + rect1.width >= rect2.x &&
+		rect2.x + rect2.width >= rect1.x &&
+		rect1.y + rect1.height >= rect2.y &&
+		rect2.y + rect2.height >= rect1.y
+	);
 }
 export function normalizeRect(rect: IRect)
 {
@@ -207,7 +232,7 @@ export function random_asbOrNot(num: number, rnd = Math.random)
 
 export function random_boolean(rnd = Math.random)
 {
-    return rnd() < 0.5;
+	return rnd() < 0.5;
 }
 
 export function randomInt(max: number): number;
@@ -218,10 +243,21 @@ export function randomInt(maxmin: number, max?: number, rnd = Math.random)
 		return Math.floor(rnd() * (maxmin - max)) + max;
 	return Math.floor(rnd() * maxmin);
 }
+export function chooseRandom<T>(array: T[], rnd = Math.random)
+{
+	return array[randomInt(0, array.length, rnd)];
+}
+/**
+ * Shuffles inplace
+ */
 export function shuffle<T>(array: T[], rnd = Math.random)
 {
 	return array.sort(() => 0.5 - rnd());
 }
+/**
+ * Keep array untouched
+ * @returns new shuffled array
+ */
 export function shuffledWithWeights<T>(array: T[], weights: number[], rnd = Math.random)
 {
 	if (array.length != weights.length)
@@ -253,9 +289,9 @@ export function square(num: number)
 }
 export function loadScript(scriptPath: string)
 {
-    const el = document.createElement("script");
-    el.src = scriptPath;
-    document.head.appendChild(el);
+	const el = document.createElement("script");
+	el.src = scriptPath;
+	document.head.appendChild(el);
 }
 export function addButtonListener(id: string, f: (e: MouseEvent) => void)
 {
@@ -292,6 +328,41 @@ export function downloadFile(filename: string, text: string)
 
 	document.body.removeChild(el);
 }
+export function openTextFile(accept = "*")
+{
+	return new Promise<string>((resolve, reject) =>
+	{
+		const input = document.createElement("input");
+		input.type = "file";
+		input.accept = accept;
+
+		input.onchange = () =>
+		{
+			if (!input.files)
+			{
+				reject()
+				return;
+			}
+			const file = input.files[0];
+
+			const reader = new FileReader();
+			reader.readAsText(file, "UTF-8");
+			reader.onload = readerEvent =>
+			{
+				if (!readerEvent.target)
+				{
+					reject()
+					return;
+				}
+				const content = readerEvent.target.result;
+				resolve(content as string);
+			}
+			reader.onerror = reject;
+		}
+
+		input.click();
+	})
+}
 export async function wait(t: number)
 {
 	return new Promise(res => setTimeout(res, t));
@@ -307,6 +378,36 @@ export function hslColor(h: number, s: number, l: number)
 {
 	return `hsl(${h}, ${s}%, ${l}%)`;
 }
+/**
+ *
+ * @param r in range [0; 255]
+ * @param g in range [0; 255]
+ * @param b in range [0; 255]
+ * @returns `hsl(${h}, ${s}%, ${l}%)`
+ */
+export function rgbColor(r: number, g: number, b: number)
+{
+	return `hsl(${r}, ${g}%, ${b}%)`;
+}
+export function lerp(v1: number, v2: number, t: number)
+{
+	return (v2 - v1) * t + v1;
+}
+export function dateNow(split = ".")
+{
+	const date = new Date();
+	return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join(split);
+}
+export function numNoun(num: number, one: string, two: string, five: string)
+{
+	num = Math.abs(num);
+	num %= 100;
+	if (num >= 5 && num <= 20) return five;
+	num %= 10;
+	if (num == 1) return one;
+	if (num >= 2 && num <= 4) return two;
+	return five;
+}
 
 
 export interface IRect
@@ -317,7 +418,8 @@ export interface IRect
 	height: number
 }
 
-export interface IPoint {
+export interface IPoint
+{
 	x: number,
 	y: number,
 }
@@ -401,5 +503,13 @@ export function initEl<K extends keyof HTMLElementTagNameMap>(tagName: K, classe
 			el.append(children);
 	}
 
+	return el;
+}
+
+export function createSvgEl<K extends keyof SVGElementTagNameMap>(qualifiedName: K, parent?: Node): SVGElementTagNameMap[K]
+{
+	const el = document.createElementNS("http://www.w3.org/2000/svg", qualifiedName);
+	if (parent)
+		parent.appendChild(el);
 	return el;
 }
