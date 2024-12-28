@@ -26,8 +26,16 @@ export const random = {
 	shuffledWithWeights: shuffledWithWeights,
 	color: randomColor,
 }
+export const fetches = {
+	get: fetchGet,
+	post: fetchPost,
+	delete: fetchDelete,
+	jsonGet: fetchJsonGet,
+	jsonPost: fetchJsonPost,
+	jsonDelete: fetchJsonDelete,
+}
 export const other = {
-	square,
+	square: sq,
 	loadScript,
 	addButtonListener,
 	capitalize,
@@ -101,22 +109,22 @@ export function drawGridOnCanvas(ctx: CanvasRenderingContext2D, cellSize: number
 	const canvasWidth = ctx.canvas.width;
 	const canvasHeight = ctx.canvas.height;
 
-    ctx.save();
+	ctx.save();
 	ctx.strokeStyle = color;
 	ctx.lineWidth = 2;
 	ctx.beginPath();
-    for (let x = cellSize; x < canvasWidth; x += cellSize)
+	for (let x = cellSize; x < canvasWidth; x += cellSize)
 	{
 		ctx.moveTo(x, 0);
 		ctx.lineTo(x, canvasHeight);
 	}
-    for (let y = cellSize; y < canvasWidth; y += cellSize)
+	for (let y = cellSize; y < canvasWidth; y += cellSize)
 	{
 		ctx.moveTo(0, y);
 		ctx.lineTo(canvasWidth, y);
 	}
 	ctx.stroke();
-    ctx.restore();
+	ctx.restore();
 }
 export function drawMouseCoordsOnCanvas(ctx: CanvasRenderingContext2D, x: number, y: number)
 {
@@ -153,7 +161,7 @@ export function drawMouseCoordsOnCanvas(ctx: CanvasRenderingContext2D, x: number
 //intersection
 export function circlePointIntersect(circle: ICircle, point: IPoint)
 {
-	return circle.r * circle.r >= (circle.x - point.x) * (circle.x - point.x) + (circle.y - point.y) * (circle.y - point.y);
+	return sq(circle.r) >= sq(circle.x - point.x) + sq(circle.y - point.y);
 }
 export function rectPointIntersect(rect: IRect, point: IPoint)
 {
@@ -170,18 +178,18 @@ export function circlesIntersect(circle1: ICircle, circle2: ICircle)
 	const dx = circle1.x - circle2.x;
 	const dy = circle1.y - circle2.y;
 
-	return square(dx) + square(dy) < square(circle1.r + circle2.r);
+	return sq(dx) + sq(dy) < sq(circle1.r + circle2.r);
 }
 export function rectIntersect(rect1: IRect, rect2: IRect)
 {
 	normalizeRect(rect1);
 	normalizeRect(rect2);
-    return (
-        rect1.x + rect1.width >= rect2.x &&
-        rect2.x + rect2.width >= rect1.x &&
-        rect1.y + rect1.height >= rect2.y &&
-        rect2.y + rect2.height >= rect1.y
-    );
+	return (
+		rect1.x + rect1.width >= rect2.x &&
+		rect2.x + rect2.width >= rect1.x &&
+		rect1.y + rect1.height >= rect2.y &&
+		rect2.y + rect2.height >= rect1.y
+	);
 }
 export function normalizeRect(rect: IRect)
 {
@@ -207,7 +215,7 @@ export function random_asbOrNot(num: number, rnd = Math.random)
 
 export function random_boolean(rnd = Math.random)
 {
-    return rnd() < 0.5;
+	return rnd() < 0.5;
 }
 
 export function randomInt(max: number): number;
@@ -247,15 +255,16 @@ export function randomWithSeed(seed: number)
 
 
 //other
-export function square(num: number)
+export function sq(num: number)
 {
 	return num * num;
 }
+export const square = sq;
 export function loadScript(scriptPath: string)
 {
-    const el = document.createElement("script");
-    el.src = scriptPath;
-    document.head.appendChild(el);
+	const el = document.createElement("script");
+	el.src = scriptPath;
+	document.head.appendChild(el);
 }
 export function addButtonListener(id: string, f: (e: MouseEvent) => void)
 {
@@ -266,6 +275,7 @@ export function capitalize(text: string)
 {
 	return text.slice(0, 1).toUpperCase() + text.slice(1);
 }
+export const toCapitalCase = capitalize;
 export function copyText(text: string)
 {
 	const el = document.createElement('textarea');
@@ -317,7 +327,8 @@ export interface IRect
 	height: number
 }
 
-export interface IPoint {
+export interface IPoint
+{
 	x: number,
 	y: number,
 }
@@ -402,4 +413,54 @@ export function initEl<K extends keyof HTMLElementTagNameMap>(tagName: K, classe
 	}
 
 	return el;
+}
+
+
+async function fetchWithJson(method: "GET" | "POST" | "DELETE", input: RequestInfo | URL, body?: any)
+{
+	const res = await fetch(input, {
+		method,
+		headers: body === undefined ? {} : {
+			"Content-Type": "application/json"
+		},
+		body: body === undefined ? null : JSON.stringify(body),
+	});
+	return res;
+}
+
+export function fetchGet(input: RequestInfo | URL, body?: any)
+{
+	return fetchWithJson("GET", input, body);
+}
+
+export function fetchPost(input: RequestInfo | URL, body?: any)
+{
+	return fetchWithJson("POST", input, body);
+}
+
+export function fetchDelete(input: RequestInfo | URL, body?: any)
+{
+	return fetchWithJson("DELETE", input, body);
+}
+
+async function fetchJson<T>(method: "GET" | "POST" | "DELETE", input: RequestInfo | URL, body?: any)
+{
+	const res = await fetchWithJson(method, input, body);
+	const data = await res.json();
+	return data as T;
+}
+
+export function fetchJsonGet<T>(input: RequestInfo | URL, body?: any)
+{
+	return fetchJson<T>("GET", input, body);
+}
+
+export function fetchJsonPost<T>(input: RequestInfo | URL, body?: any)
+{
+	return fetchJson<T>("POST", input, body);
+}
+
+export function fetchJsonDelete<T>(input: RequestInfo | URL, body?: any)
+{
+	return fetchJson<T>("DELETE", input, body);
 }
