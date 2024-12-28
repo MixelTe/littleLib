@@ -524,7 +524,7 @@ export function createSvgEl<K extends keyof SVGElementTagNameMap>(qualifiedName:
 	return el;
 }
 
-
+export class FetchError extends Error { }
 async function fetchWithJson(method: "GET" | "POST" | "DELETE", input: RequestInfo | URL, body?: any)
 {
 	const res = await fetch(input, {
@@ -534,12 +534,14 @@ async function fetchWithJson(method: "GET" | "POST" | "DELETE", input: RequestIn
 		},
 		body: body === undefined ? null : JSON.stringify(body),
 	});
+	if (!res.ok)
+		throw new FetchError((await res.json() as { msg: string }).msg)
 	return res;
 }
 
-export function fetchGet(input: RequestInfo | URL, body?: any)
+export function fetchGet(input: RequestInfo | URL)
 {
-	return fetchWithJson("GET", input, body);
+	return fetchWithJson("GET", input);
 }
 
 export function fetchPost(input: RequestInfo | URL, body?: any)
@@ -559,9 +561,9 @@ async function fetchJson<T>(method: "GET" | "POST" | "DELETE", input: RequestInf
 	return data as T;
 }
 
-export function fetchJsonGet<T>(input: RequestInfo | URL, body?: any)
+export function fetchJsonGet<T>(input: RequestInfo | URL)
 {
-	return fetchJson<T>("GET", input, body);
+	return fetchJson<T>("GET", input);
 }
 
 export function fetchJsonPost<T>(input: RequestInfo | URL, body?: any)
