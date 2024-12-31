@@ -48,6 +48,7 @@ export const other = {
 	hslColor,
 	rgbColor,
 	lerp,
+	minmax,
 	dateNow,
 	numNoun,
 }
@@ -402,6 +403,10 @@ export function rgbColor(r: number, g: number, b: number)
 export function lerp(v1: number, v2: number, t: number)
 {
 	return (v2 - v1) * t + v1;
+}
+export function minmax(v: number, min: number, max: number)
+{
+	return Math.min(Math.max(v, min), max);
 }
 export function dateNow(split = ".")
 {
