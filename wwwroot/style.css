@@ -43,6 +43,7 @@ h1 {
 .box-bottom {
 	display: flex;
 	justify-content: center;
+	gap: 4px;
 }
 
 * {

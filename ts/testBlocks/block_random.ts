@@ -4,6 +4,7 @@ import { Rect, Text_simple } from "./drawing.js";
 const outputsInt = getOutputs("table_random_int");
 const outputsBoolean = getOutputs("table_random_boolean");
 const canvasAbsOrNot = Lib.get.canvas("canvas_random_absOrNot");
+const choose = Lib.get.div("random_choose");
 const shuffle = Lib.get.div("random_shuffle");
 const shuffleWeights = Lib.get.div("random_shuffleWeights");
 const color = Lib.get.div("random_color");
@@ -51,6 +52,24 @@ export function run()
 			if (el instanceof HTMLElement)
 				el.style.backgroundColor = Lib.random.color();
 		}
+	});
+	for (let i = 0; i < 20; i++)
+	{
+		const div = Lib.Div("circle")
+		choose.appendChild(div);
+		div.style.backgroundColor = "#aaa";
+		moveCircle(div, i);
+	}
+	Lib.addButtonListener("button_random_choose", () =>
+	{
+		const children = []
+		for (const el of choose.children)
+			if (el instanceof HTMLElement)
+			{
+				el.style.backgroundColor = "#aaa";
+				children.push(el);
+			}
+		Lib.random.choose(children).style.backgroundColor = "lime";
 	});
 	for (let i = 0; i < 20; i++)
 	{

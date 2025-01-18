@@ -106,9 +106,10 @@ function addListenerToDraw(buttonId: string, key: Key, shape: "point" | "rect" |
 				}
 				if (objects.second instanceof Circle)
 				{
-					objects.second.r = Math.sqrt(Lib.square(objects.second.x - e.offsetX) + Lib.square(objects.second.y - e.offsetY));
+					objects.second.r = Math.sqrt(Lib.sq(objects.second.x - e.offsetX) + Lib.sq(objects.second.y - e.offsetY));
 				}
 			}
+			if (shape == "point") objects.second = new Point(e.offsetX, e.offsetY);
 			isIntersect(key);
 			drawOne(key);
 			Lib.canvas.drawCoords(ctx, e.offsetX, e.offsetY);

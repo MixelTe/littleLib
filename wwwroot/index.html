@@ -23,8 +23,9 @@
 					</div>
 				</div>
 				<div class="box-bottom">
-					<button id="button_canvas_drawGrid" style="margin-right: 4px;">Draw grid</button>
+					<button id="button_canvas_drawGrid">Draw grid</button>
 					<button id="button_canvas_fitToParent">fit to parent</button>
+					<button id="button_canvas_saveAsPng">save as png</button>
 				</div>
 			</div>
 
@@ -185,6 +186,18 @@
 			</div>
 
 			<div class="box" style="width: 100%;">
+				<h2 class="box-head">choose</h2>
+				<div class="box-body">
+					<div class="shuffle" id="random_choose">
+						<!-- <div class="circle"></div> -->
+					</div>
+				</div>
+				<div class="box-bottom">
+					<button id="button_random_choose">Choose</button>
+				</div>
+			</div>
+
+			<div class="box" style="width: 100%;">
 				<h2 class="box-head">shuffle</h2>
 				<div class="box-body">
 					<div class="shuffle" id="random_shuffle">
@@ -279,6 +292,14 @@
 					<button id="button_popup_contextMenu">open</button>
 				</div>
 				<div class="box-bottom" id="popup_contextMenu_result"></div>
+			</div>
+
+			<div class="box" style="width: 100%;">
+				<h2 class="box-head">toast</h2>
+				<div class="box-bottom">
+					<button id="button_popup_toast">open</button>
+					<button id="button_popup_toastLong">open long</button>
+				</div>
 			</div>
 
 		</div>

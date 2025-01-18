@@ -1,5 +1,5 @@
 import * as Lib from "../littleLib.js";
-import { contextMenu, Popup } from "../popup.js";
+import { contextMenu, Popup, Toast } from "../popup.js";
 export function run()
 {
 	const r1 = Lib.get.div("popup_open_result");
@@ -38,4 +38,6 @@ export function run()
 		]);
 		r3.innerText = `result: ${r}`;
 	});
+	Lib.addButtonListener("button_popup_toast", () => Toast.show("Toast"));
+	Lib.addButtonListener("button_popup_toastLong", () => Toast.show("Toast long", Toast.LONG));
 }

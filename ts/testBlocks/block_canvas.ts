@@ -11,4 +11,5 @@ export function run()
 		Lib.canvas.drawGrid(ctx, 20);
 	});
 	Lib.addButtonListener("button_canvas_fitToParent", () => { Lib.canvas.fitToParent(canvas); });
+	Lib.addButtonListener("button_canvas_saveAsPng", () => { Lib.canvas.saveAsPng(canvas, "canvas.png"); });
 }
