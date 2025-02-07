@@ -308,6 +308,7 @@ export function addButtonListener(id: string, f: (e: MouseEvent, btn: HTMLButton
 {
 	const button = getButton(id);
 	button.addEventListener("click", e => f(e, button));
+	return button;
 }
 export function addLinkListener(id: string, f: (e: MouseEvent, a: HTMLAnchorElement) => void)
 {
