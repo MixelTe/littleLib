@@ -227,7 +227,6 @@ export class Toast
 		const dy = Toast.getNextDy();
 		toast.style.setProperty("--dy", `${dy}`);
 		document.body.appendChild(toast);
-		console.log(Toast.opened, dy);
 		Toast.opened.push(dy);
 		setTimeout(() => toast.classList.add("popup-toast_show"));
 		setTimeout(() => { toast.classList.add("popup-toast_hide"); }, duration - 300);
